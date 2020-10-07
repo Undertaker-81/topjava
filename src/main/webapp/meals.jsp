@@ -17,6 +17,7 @@
 <h3><a href="index.html">Home</a></h3>
 <hr>
 <h2>Meals</h2>
+<h3><a href="createMeal.jsp">Create meal</a></h3>
 <table border=1>
     <thead>
     <tr>
@@ -39,7 +40,8 @@
             <td><javatime:format value="${meal.dateTime}" style="MS" /> </td>
             <td>${meal.description} </td>
             <td>${meal.calories} </td>
-
+            <td><a href="meals?action=edit&mealId=<c:out value="${meal.id}"/>">Update</a></td>
+            <td><a href="meals?action=delete&mealId=<c:out value="${meal.id}"/>">Delete</a></td>
 
         </tr>
 
