@@ -1,4 +1,6 @@
+<%@ page import="ru.javawebinar.topjava.web.SecurityUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ru">
 <head>
     <title>Users</title>
@@ -6,6 +8,9 @@
 <body>
 <h3><a href="index.html">Home</a></h3>
 <hr>
-<h2>Users</h2>
+    <h2>Users</h2>
+<jsp:useBean id="SecurityUtil" class="ru.javawebinar.topjava.web.SecurityUtil" />
+
+<c:out value="user = ${SecurityUtil.authUserId()}"/>
 </body>
 </html>

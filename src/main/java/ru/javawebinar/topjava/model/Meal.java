@@ -53,6 +53,10 @@ public class Meal extends AbstractBaseEntity {
         return dateTime.toLocalTime();
     }
 
+    public void setUserid(Integer userid) {
+        this.userid = userid;
+    }
+
     public boolean isNew() {
         return id == null;
     }
@@ -68,6 +72,7 @@ public class Meal extends AbstractBaseEntity {
                 ", dateTime=" + dateTime +
                 ", description='" + description + '\'' +
                 ", calories=" + calories +
+                ", userId=" + userid +
                 '}';
     }
 }

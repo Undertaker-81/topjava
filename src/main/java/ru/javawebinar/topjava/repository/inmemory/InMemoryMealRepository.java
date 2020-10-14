@@ -18,7 +18,7 @@ public class InMemoryMealRepository implements MealRepository {
 
     {
         for (Meal meal :MealsUtil.meals){
-            save(meal, -1);
+            save(meal, 1);
         }
     }
 
@@ -26,10 +26,12 @@ public class InMemoryMealRepository implements MealRepository {
     public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
+            meal.setUserid(userId);
             repository.put(meal.getId(), meal);
             return meal;
         }
         // handle case: update, but not present in storage
+        meal.setUserid(userId);
         return repository.computeIfPresent(meal.getId(), (id, oldMeal) -> meal);
     }
 
