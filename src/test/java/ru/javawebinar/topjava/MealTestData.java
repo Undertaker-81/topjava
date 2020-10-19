@@ -30,9 +30,11 @@ public class MealTestData {
     public static Meal getNew(){
         return new Meal(null, LocalDateTime.now(), "новая еда", 650);
     }
+
     public static Meal getUpdated(Integer id){
-        Meal meal = meals.get(id);
+        Meal meal = getMeal(id);
         Meal updated = new Meal(meal);
+        updated.setId(id);
         updated.setCalories(600);
         updated.setDescription("updated");
         return updated;
@@ -47,5 +49,9 @@ public class MealTestData {
 
     public static void assertMatch(Meal actual, Meal expected) {
         assertThat(actual).usingRecursiveComparison().ignoringFields("date_time").isEqualTo(expected);
+    }
+
+    public static void assertMatch(Iterable<Meal> actual, Iterable<Meal> expected) {
+        assertThat(actual).usingElementComparatorIgnoringFields("date_time").isEqualTo(expected);
     }
 }
