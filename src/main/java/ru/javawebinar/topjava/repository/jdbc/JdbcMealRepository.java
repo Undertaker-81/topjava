@@ -15,16 +15,16 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
-public class JdbcMealRepository implements MealRepository {
 
-    private static final RowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
+public abstract class JdbcMealRepository implements MealRepository {
 
-    private final JdbcTemplate jdbcTemplate;
+     static final RowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
 
-    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+     final JdbcTemplate jdbcTemplate;
 
-    private final SimpleJdbcInsert insertMeal;
+     final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+     final SimpleJdbcInsert insertMeal;
 
     @Autowired
     public JdbcMealRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
