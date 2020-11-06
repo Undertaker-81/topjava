@@ -29,42 +29,14 @@ import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
-@ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
-@RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-@ActiveProfiles(resolver = ActiveDbProfileResolver.class)
-public class AbstractMealServiceTest {
-    private static final Logger log = getLogger("result");
 
-    private static final StringBuilder results = new StringBuilder();
+public abstract class AbstractMealServiceTest extends AbstractServiceTest{
 
-    @Rule
-    // http://stackoverflow.com/questions/14892125/what-is-the-best-practice-to-determine-the-execution-time-of-the-bussiness-relev
-    public final Stopwatch stopwatch = new Stopwatch() {
-        @Override
-        protected void finished(long nanos, Description description) {
-            String result = String.format("\n%-25s %7d", description.getMethodName(), TimeUnit.NANOSECONDS.toMillis(nanos));
-            results.append(result);
-            log.info(result + " ms\n");
-        }
-    };
 
     @Autowired
     protected MealService service;
 
-    @AfterClass
-    public static void printResult() {
-        log.info("\n---------------------------------" +
-                "\nTest                 Duration, ms" +
-                "\n---------------------------------" +
-                results +
-                "\n---------------------------------");
-    }
-
-    @Test
+     @Test
     public void delete() {
         service.delete(MEAL1_ID, USER_ID);
         assertThrows(NotFoundException.class, () -> service.get(MEAL1_ID, USER_ID));
