@@ -111,8 +111,7 @@ public class JdbcUserRepository implements UserRepository {
             List<Role> roles = jdbcTemplate.query("select role from user_roles where user_id=?", new RowMapper<Role>() {
                 @Override
                 public Role mapRow(ResultSet resultSet, int i) throws SQLException {
-                    Role role = Role.valueOf(resultSet.getObject("role", String.class));
-                    return role;
+                    return Role.valueOf(resultSet.getObject("role", String.class));
                 }
             }, user.getId());
 

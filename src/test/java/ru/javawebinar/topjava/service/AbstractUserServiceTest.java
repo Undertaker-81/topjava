@@ -5,7 +5,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.support.NoOpCacheManager;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
@@ -28,8 +30,9 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     @Autowired
     protected UserService service;
 
+    @Qualifier("cacheManager")
     @Autowired
-    private CacheManager cacheManager;
+    private CacheManager cacheManager ;
 
     @Autowired(required = false)
     protected JpaUtil jpaUtil;
@@ -47,7 +50,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     }
 
 
-    @Before
+  /*  @Before
     public void setUp() {
         if (!isJdbs()){
             cacheManager.getCache("users").clear();
@@ -55,6 +58,8 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         }
 
     }
+
+   */
 
     @Test
     public void create() {
