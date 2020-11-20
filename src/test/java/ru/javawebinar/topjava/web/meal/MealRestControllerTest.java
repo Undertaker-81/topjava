@@ -15,6 +15,10 @@ import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -83,6 +87,7 @@ class MealRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.put(REST_URL + MEAL1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
+                .andDo(print())
                 .andExpect(status().isNoContent());
         MEAL_MATCHER.assertMatch(mealService.get(MEAL1_ID, USER_ID), updated);
     }
@@ -99,26 +104,14 @@ class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getBetweenWithNullDates() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + "/filtered"))
+        perform(MockMvcRequestBuilders.get(REST_URL + "/filtered")
+                .queryParam("startDate", LocalDate.of(2020, Month.JANUARY, 30).toString())
+                .queryParam("endDate", LocalDate.of(2020, Month.JANUARY, 30).toString()))
                 .andExpect(status().isOk())
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect( MEALTO_MATCHER.contentJson(MealsUtil.getTos(meals,2000)));
+                .andExpect( MEALTO_MATCHER.contentJson(MealsUtil.getTos(List.of(meal3, meal2, meal1),2000)));
     }
 
-    /*
-    @Test
-    public void getBetweenInclusive() {
-        MEAL_MATCHER.assertMatch(service.getBetweenInclusive(
-                LocalDate.of(2020, Month.JANUARY, 30),
-                LocalDate.of(2020, Month.JANUARY, 30), USER_ID),
-                meal3, meal2, meal1);
-    }
-
-    @Test
-    public void getBetweenWithNullDates() {
-        MEAL_MATCHER.assertMatch(service.getBetweenInclusive(null, null, USER_ID), meals);
-    }
-     */
 }
