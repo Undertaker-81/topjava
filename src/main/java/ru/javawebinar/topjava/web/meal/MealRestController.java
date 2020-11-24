@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.formater.MyDateFormat;
+import ru.javawebinar.topjava.util.formater.MyTimeFormat;
 
 
 import java.net.URI;
@@ -58,7 +59,7 @@ public class MealRestController extends AbstractMealController {
     public void update(@RequestBody Meal meal, @PathVariable int id) {
         super.update(meal, id);
     }
-
+/*
     @Override
     @GetMapping("/filtered")
     public List<MealTo> getBetween( @RequestParam(value = "startDate", required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
@@ -67,4 +68,14 @@ public class MealRestController extends AbstractMealController {
                                     @RequestParam(value = "endTime", required = false)  @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)LocalTime endTime) {
         return super.getBetween(startDate, startTime, endDate, endTime);
     }
+
+ */
+    @Override
+    @GetMapping("/filtered")
+    public List<MealTo> getBetween(@RequestParam(value = "startDate", required = false)  @MyDateFormat LocalDate startDate,
+                                   @RequestParam(value = "startTime", required = false)  @MyTimeFormat  LocalTime startTime,
+                                   @RequestParam(value = "endDate", required = false)  @MyDateFormat LocalDate endDate,
+                                   @RequestParam(value = "endTime", required = false) @MyTimeFormat LocalTime endTime) {
+    return super.getBetween(startDate, startTime, endDate, endTime);
+}
 }
