@@ -1,5 +1,5 @@
 var ctx;
-
+var mealAjaxUrl = "user/meals/";
 // $(document).ready(function () {
 $(function () {
     // https://stackoverflow.com/a/5064235/548473
@@ -31,10 +31,25 @@ $(function () {
             "order": [
                 [
                     0,
-                    "asc"
+                    "desc"
                 ]
             ]
         })
     };
     makeEditable();
 });
+
+function updateFilteredTable() {
+    $.ajax({
+        type: "GET",
+        url: mealAjaxUrl + "filter",
+        data: $("#filter").serialize()
+    }).done(function (data) {
+        ctx.datatableApi.clear().rows.add(data).draw();
+    });
+}
+
+function clearFilter() {
+    $("#filter")[0].reset();
+    $.get(mealAjaxUrl, updateTable);
+}
