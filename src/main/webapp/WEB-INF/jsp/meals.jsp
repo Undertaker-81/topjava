@@ -13,7 +13,8 @@
     <div class="container">
 
      <h3  class="text-center"><spring:message code="meal.title"/></h3>
-     <div class="card-body pb-0">
+      <div class="card border-dark">
+       <div class="card-body pb-0">
          <form id="filter">
             <dl>
                 <dt><spring:message code="meal.startDate"/>:</dt>
@@ -33,15 +34,19 @@
             </dl>
 
          </form>
+         <div class="card-footer text-right">
          <button class="btn btn-danger" onclick="clearFilter()">
              <span class="fa fa-remove"></span>
-             Cancel
+             <spring:message code="common.cancel"/>
          </button>
          <button class="btn btn-primary" onclick="updateFilteredTable()">
              <span class="fa fa-filter"></span>
-             Filter
+             <spring:message code="meal.filter"/>
          </button>
+         </div>
      </div>
+    </div>
+        <br/>
         <button class="btn btn-primary" onclick="add()">
             <span class="fa fa-plus"></span>
             <spring:message code="common.add"/>
