@@ -3,6 +3,8 @@ package ru.javawebinar.topjava.web.user;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 
@@ -47,5 +49,12 @@ public abstract class AbstractUserController {
     public User getByMail(String email) {
         log.info("getByEmail {}", email);
         return service.getByEmail(email);
+    }
+
+  //
+    public void isActive(int id, boolean checked){
+        User user = service.get(id);
+        user.setEnabled(checked);
+        service.update(user);
     }
 }
