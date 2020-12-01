@@ -32,4 +32,12 @@ public class AdminUIController extends AbstractUserController {
                        @RequestParam String password) {
         super.create(new User(null, name, email, password, Role.USER));
     }
+
+
+    @PostMapping(value = "/{id}")
+    public void enable(@RequestParam boolean enabled, @PathVariable int id) {
+     //   boolean checked = Boolean.getBoolean(enabled);
+
+        super.enable( enabled, id);
+    }
 }

@@ -74,6 +74,15 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    void enable() {
+        User updated = getUpdated();
+        updated.setEnabled(false);
+        service.update(updated);
+        getUpdated().setEnabled(false);
+        USER_MATCHER.assertMatch(service.get(USER_ID), getUpdated());
+    }
+
+    @Test
     void getAll() {
         List<User> all = service.getAll();
         USER_MATCHER.assertMatch(all, admin, user);

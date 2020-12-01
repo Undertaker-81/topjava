@@ -58,8 +58,15 @@ public class AdminRestController extends AbstractUserController {
     }
 
     @Override
-    @PostMapping(value = "/{id}" , consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void isActive(@PathVariable int id, @RequestBody boolean checked) {
-        super.isActive(id, checked);
+    @PostMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE )
+    public void enable(@RequestBody boolean checked, @PathVariable int id) {
+        super.enable( checked, id);
     }
+
+
+    @GetMapping("/with-meals/{id}")
+    public User getWithMeals(@PathVariable int id) {
+        return super.getWithMeals(id);
+    }
+
 }

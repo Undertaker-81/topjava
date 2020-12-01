@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 
@@ -52,9 +53,14 @@ public abstract class AbstractUserController {
     }
 
   //
-    public void isActive(int id, boolean checked){
+    public void enable(boolean checked, int id){
         User user = service.get(id);
         user.setEnabled(checked);
         service.update(user);
     }
+
+     public User getWithMeals(int id) {
+
+        return service.getWithMeals(id);
+     }
 }
