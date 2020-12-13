@@ -5,11 +5,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.IllegalRequestDataException;
+import ru.javawebinar.topjava.web.user.AdminUIController;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -42,9 +44,7 @@ public class MealUIController extends AbstractMealController {
     @PostMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void createOrUpdate(@Valid Meal meal, BindingResult result) {
-        if (result.hasErrors()) {
-            throw new IllegalRequestDataException(result.getFieldError().toString());
-        }
+        ValidationUtil.errorBuilder(result);
         if (meal.isNew()) {
             super.create(meal);
         } else {

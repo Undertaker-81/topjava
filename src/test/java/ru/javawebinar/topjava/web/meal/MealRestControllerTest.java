@@ -80,6 +80,17 @@ class MealRestControllerTest extends AbstractControllerTest {
 
         MEAL_MATCHER.assertMatch(mealService.get(MEAL1_ID, USER_ID), updated);
     }
+    @Test
+    void updateWithoutDescription() throws Exception {
+        Meal updated = getUpdatedWrong();
+        perform(MockMvcRequestBuilders.put(REST_URL + MEAL1_ID).contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(updated))
+                .with(userHttpBasic(user)))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+
+    }
+
 
     @Test
     void createWithLocation() throws Exception {
@@ -95,6 +106,19 @@ class MealRestControllerTest extends AbstractControllerTest {
         MEAL_MATCHER.assertMatch(created, newMeal);
         MEAL_MATCHER.assertMatch(mealService.get(newId, USER_ID), newMeal);
     }
+
+    @Test
+    void createWithoutDescription() throws Exception {
+        Meal newMeal = getNewWrong();
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newMeal))
+                .with(userHttpBasic(user)))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+
+    }
+
 
     @Test
     void getAll() throws Exception {
