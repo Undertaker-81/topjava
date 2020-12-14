@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
@@ -51,10 +52,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email" class="col-form-label"><spring:message code="user.email"/></label>
+                        <label for="email" class="col-form-label"><spring:message code="user.email"/>"</label>
                         <input type="email" class="form-control" id="email" name="email"
                                placeholder="<spring:message code="user.email"/>">
                     </div>
+
 
                     <div class="form-group">
                         <label for="password" class="col-form-label"><spring:message code="user.password"/></label>
