@@ -28,11 +28,11 @@ public class UserFormValidator implements Validator {
     public void validate(Object o, Errors errors) {
         UserTo user = (UserTo) o;
         String email = ((UserTo) o).getEmail();
-      //  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", errors.getFieldError().toString());
+      //  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "not null");
         if (!email.equals("")) {
             if (userService.getByEmail(email) != null) {
-
-              //  errors.rejectValue("email", "!!!!!!!");
+       //         throw new IllegalRequestDataException("User with this email already exists");
+               errors.rejectValue("email", "common.appError");
 
             }
         }

@@ -12,7 +12,7 @@ import ru.javawebinar.topjava.util.ValidationUtil;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
