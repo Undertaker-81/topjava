@@ -22,19 +22,11 @@ import static ru.javawebinar.topjava.web.SecurityUtil.authUserId;
 public class ProfileRestController extends AbstractUserController {
     static final String REST_URL = "/rest/profile";
 
-    @Autowired
-    UserFormValidator userFormValidator;
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(userFormValidator);
-    }
 
     @GetMapping
     public User get() {
         return super.get(authUserId());
     }
-
 
 
     @DeleteMapping

@@ -96,6 +96,7 @@ public class ValidationUtil {
                 sb.append(err.getDefaultMessage());
                 sb.append("<br>");
             }
+
             throw new IllegalRequestDataException(sb.toString());
         }
     }

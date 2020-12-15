@@ -8,7 +8,10 @@ import org.springframework.validation.Validator;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.to.UserTo;
-import ru.javawebinar.topjava.util.exception.IllegalRequestDataException;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
+
+import java.util.Optional;
+
 
 /**
  * @author Panfilov Dmitriy
@@ -26,15 +29,29 @@ public class UserFormValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        UserTo user = (UserTo) o;
-        String email = ((UserTo) o).getEmail();
-      //  ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "not null");
-        if (!email.equals("")) {
-            if (userService.getByEmail(email) != null) {
-       //         throw new IllegalRequestDataException("User with this email already exists");
-               errors.rejectValue("email", "common.appError");
+        UserTo userTo = (UserTo) o;
+        String email = userTo.getEmail();
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "error.user.email");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "error.user.name");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.user.password");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "caloriesPerDay", "error.user.caloriesPerDay");
+        User user = null;
+        try {
+             user = userService.getByEmail(email);
+        }catch (NotFoundException e){
 
-            }
         }
+
+         if (user != null) {
+            if (user.getEmail().equals(email))
+              errors.rejectValue("email", "error.user.emailDouble");
+
+
+         }
+         if (userTo.getPassword().length() < 5){
+             errors.rejectValue("password", "error.user.passwordLength");
+
+         }
+
     }
 }

@@ -145,4 +145,18 @@ class AdminRestControllerTest extends AbstractControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(USER_WITH_MEALS_MATCHER.contentJson(admin));
     }
+
+    @Test
+    void updateWithExistEmail() throws Exception {
+        User updated = UserTestData.getUpdatedWithExistEmail();
+        perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(userHttpBasic(admin))
+                .content(JsonUtil.writeValue(updated)))
+                .andExpect(content().string("User with this email already exists"))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+
+
+    }
 }
