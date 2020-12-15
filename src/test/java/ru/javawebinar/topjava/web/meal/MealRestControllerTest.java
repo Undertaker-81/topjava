@@ -148,4 +148,16 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MEAL_TO_MATCHER.contentJson(getTos(meals, user.getCaloriesPerDay())));
     }
+
+    @Test
+    void createWithDataIsExist() throws Exception {
+        Meal newMeal = getNewWrongDate();
+        ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newMeal))
+                .with(userHttpBasic(user)))
+                .andDo(print())
+                .andExpect(status().is4xxClientError());
+
+    }
 }

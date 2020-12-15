@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import ru.javawebinar.topjava.View;
 import ru.javawebinar.topjava.util.DateTimeUtil;
+import ru.javawebinar.topjava.web.validator.ValidateDataTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,6 +27,7 @@ import java.time.LocalTime;
 //        @NamedQuery(name = Meal.UPDATE, query = "UPDATE Meal m SET m.dateTime = :datetime, m.calories= :calories," +
 //                "m.description=:desc where m.id=:id and m.user.id=:userId")
 })
+@ValidateDataTime
 @Entity
 @Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "date_time"}, name = "meals_unique_user_datetime_idx")})
 public class Meal extends AbstractBaseEntity {

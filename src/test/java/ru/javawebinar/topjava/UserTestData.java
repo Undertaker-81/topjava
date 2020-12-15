@@ -58,7 +58,7 @@ public class UserTestData {
     public static User getUpdatedWithExistEmail() {
         User updated = new User(user);
         updated.setEmail("admin@gmail.com");
-        updated.setName("UpdatedName");
+        updated.setName("newpass");
         updated.setCaloriesPerDay(330);
         updated.setPassword("newPass");
         updated.setEnabled(false);

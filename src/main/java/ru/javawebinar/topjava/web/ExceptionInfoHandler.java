@@ -36,11 +36,12 @@ public class ExceptionInfoHandler {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)  // 409
-    @ExceptionHandler({DataIntegrityViolationException.class})
+    @ExceptionHandler(DataIntegrityViolationException.class)
     public ErrorInfo conflict(HttpServletRequest req, DataIntegrityViolationException e) {
-
         return logAndGetErrorInfo(req, e, true, DATA_ERROR);
     }
+
+
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)  // 422
     @ExceptionHandler({IllegalRequestDataException.class, MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class, MethodArgumentNotValidException.class})
@@ -63,7 +64,7 @@ public class ExceptionInfoHandler {
             log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
         }
             String[] errorDetails = rootCause.toString().split(": ");
-        return new ErrorInfo(req.getRequestURL(), errorType, errorDetails[errorDetails.length-1].trim());
-       // return new ErrorInfo(req.getRequestURL(), errorType, rootCause.toString());
+     //   return new ErrorInfo(req.getRequestURL(), errorType, errorDetails[errorDetails.length-1].trim());
+              return new ErrorInfo(req.getRequestURL(), errorType, rootCause.toString());
     }
 }

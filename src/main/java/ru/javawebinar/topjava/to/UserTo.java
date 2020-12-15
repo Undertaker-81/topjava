@@ -2,19 +2,21 @@ package ru.javawebinar.topjava.to;
 
 import org.hibernate.validator.constraints.Range;
 import ru.javawebinar.topjava.util.UserUtil;
+import ru.javawebinar.topjava.web.validator.ValidateMail;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-
+@ValidateMail
 public class UserTo extends BaseTo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @NotBlank
     @Size(min = 2, max = 100)
     private String name;
+
 
     @Email
     @NotBlank

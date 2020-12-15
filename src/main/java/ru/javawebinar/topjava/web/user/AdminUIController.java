@@ -57,23 +57,7 @@ public class AdminUIController extends AbstractUserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void createOrUpdate(@Valid UserTo userTo, BindingResult result) {
 
-
-       User user = null;
-        try {
-           user = super.getByMail(userTo.getEmail());
-        }catch (NotFoundException e){
-
-        }
-        if (user != null) {
-            if (user.getEmail().equals(userTo.getEmail())){
-
-              throw new IllegalRequestDataException("User with this email already exists");
-            }
-
-        }
         ValidationUtil.errorBuilder(result);
-
-
         if (userTo.isNew()) {
             super.create(userTo);
         } else {

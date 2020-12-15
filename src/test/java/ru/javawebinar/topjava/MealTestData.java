@@ -45,4 +45,8 @@ public class MealTestData {
     public static Meal getUpdatedWrong() {
         return new Meal(MEAL1_ID, meal1.getDateTime().plus(2, ChronoUnit.MINUTES), "", 200);
     }
+
+    public static Meal getNewWrongDate() {
+        return new Meal(null, of(2020, Month.JANUARY, 31, 20, 0), "", 300);
+    }
 }
