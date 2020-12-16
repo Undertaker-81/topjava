@@ -93,7 +93,8 @@ class AdminRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin))
-                .content(JsonUtil.writeValue(updated)))
+                .content(jsonWithPassword(updated, updated.getPassword())))
+                .andDo(print())
                 .andExpect(status().isNoContent());
 
         USER_MATCHER.assertMatch(userService.get(USER_ID), updated);
@@ -153,8 +154,9 @@ class AdminRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin))
-                .content(JsonUtil.writeValue(updated)))
-                .andExpect(content().string("User with this email already exists"))
+                .content(jsonWithPassword(updated, updated.getPassword())))
+
+                .andExpect(content().string("{\"url\":\"http://localhost/rest/admin/users/100000\",\"type\":\"VALIDATION_ERROR\",\"detail\":\"email Пользователь с такой почтой уже существует<br>\"}"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
 

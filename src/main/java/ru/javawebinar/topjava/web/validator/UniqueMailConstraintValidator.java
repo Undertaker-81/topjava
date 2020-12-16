@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.to.UserTo;
 import ru.javawebinar.topjava.util.exception.IllegalRequestDataException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
+import ru.javawebinar.topjava.web.SecurityUtil;
 import ru.javawebinar.topjava.web.validator.ValidateMail;
 
 import javax.validation.ConstraintValidator;
@@ -19,7 +20,7 @@ import java.util.PropertyResourceBundle;
  * 15.12.2020
  */
 @Component
-public class UniqueMailConstraintValidator implements ConstraintValidator<ValidateMail, UserTo> {
+public class UniqueMailConstraintValidator implements ConstraintValidator<ValidateMail, String> {
 
     @Autowired
     private UserService userService;
@@ -32,19 +33,21 @@ public class UniqueMailConstraintValidator implements ConstraintValidator<Valida
     }
 
     @Override
-    public boolean isValid(UserTo userTo, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
         String message = resourceBundle.getMessage("error.user.emailDouble",null,null);
         User user = null;
+
         try {
-            user = userService.getByEmail(userTo.getEmail());
-        }catch (NotFoundException e){
+            user = userService.getByEmail(email);
+
+        }catch (Exception e){
 
         }
         if (user != null) {
-            if (user.getEmail().equals(userTo.getEmail())){
+            if (user.getEmail().equals(email) ){
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext.buildConstraintViolationWithTemplate(message)
-                        .addPropertyNode("email")
+                       // .addPropertyNode("email")
                         .addConstraintViolation();
                     return false;
             }

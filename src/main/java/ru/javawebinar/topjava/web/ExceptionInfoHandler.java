@@ -7,6 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,6 +21,8 @@ import ru.javawebinar.topjava.util.exception.IllegalRequestDataException;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 import static ru.javawebinar.topjava.util.exception.ErrorType.*;
 
@@ -63,8 +66,17 @@ public class ExceptionInfoHandler {
         } else {
             log.warn("{} at request  {}: {}", errorType, req.getRequestURL(), rootCause.toString());
         }
-            String[] errorDetails = rootCause.toString().split(": ");
-     //   return new ErrorInfo(req.getRequestURL(), errorType, errorDetails[errorDetails.length-1].trim());
-              return new ErrorInfo(req.getRequestURL(), errorType, rootCause.toString());
+        StringBuilder sb = new StringBuilder();
+        sb.append(rootCause.toString());
+            if (e instanceof MethodArgumentNotValidException){
+              List<FieldError> list = ((MethodArgumentNotValidException) e).getBindingResult().getFieldErrors();
+               sb = new StringBuilder();
+                for(FieldError err : list){
+                   sb.append(err.getField()).append(" ").append(err.getDefaultMessage()).append("<br>");
+                }
+            }
+            String[] errorDetails = sb.toString().split(": ");
+        return new ErrorInfo(req.getRequestURL(), errorType, errorDetails[errorDetails.length-1].trim());
+             // return new ErrorInfo(req.getRequestURL(), errorType, sb.toString());
     }
 }

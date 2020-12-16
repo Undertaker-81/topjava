@@ -156,6 +156,7 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newMeal))
                 .with(userHttpBasic(user)))
+                .andExpect(content().string("{\"url\":\"http://localhost/rest/profile/meals/\",\"type\":\"VALIDATION_ERROR\",\"detail\":\"dateTime Эта дата уже существует в базе<br>\"}"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
 

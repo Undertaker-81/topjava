@@ -47,6 +47,6 @@ public class MealTestData {
     }
 
     public static Meal getNewWrongDate() {
-        return new Meal(null, of(2020, Month.JANUARY, 31, 20, 0), "", 300);
+        return new Meal(null, of(2020, Month.JANUARY, 31, 20, 0), "launch", 300);
     }
 }

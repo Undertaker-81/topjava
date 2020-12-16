@@ -36,14 +36,18 @@ public class UserFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "error.user.password");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "caloriesPerDay", "error.user.caloriesPerDay");
         User user = null;
+        User authorizeduser = null;
         try {
+
              user = userService.getByEmail(email);
-        }catch (NotFoundException e){
+            Integer id = SecurityUtil.authUserId();
+             authorizeduser = userService.get(id);
+        }catch (Exception e){
 
         }
 
          if (user != null) {
-            if (user.getEmail().equals(email))
+            if (user.getEmail().equals(email) && !user.equals(authorizeduser))
               errors.rejectValue("email", "error.user.emailDouble");
 
 
