@@ -5,6 +5,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.TYPE;
 
 /**
  * @author Dmitriy Panfilov
@@ -12,7 +13,7 @@ import static java.lang.annotation.ElementType.FIELD;
  */
 @Documented
 @Constraint(validatedBy = UniqueMailConstraintValidator.class)
-@Target({FIELD})
+@Target({TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidateMail {
     String message() default "";

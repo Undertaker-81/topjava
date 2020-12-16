@@ -56,6 +56,9 @@ public class UserFormValidator implements Validator {
              errors.rejectValue("password", "error.user.passwordLength");
 
          }
+         if (!email.matches("^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$")){
+             errors.rejectValue("email", "error.user.email.pattern");
+         }
 
     }
 }

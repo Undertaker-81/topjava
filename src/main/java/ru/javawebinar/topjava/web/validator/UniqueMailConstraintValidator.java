@@ -21,7 +21,7 @@ import java.util.PropertyResourceBundle;
  * 15.12.2020
  */
 @Component
-public class UniqueMailConstraintValidator implements ConstraintValidator<ValidateMail, String> {
+public class UniqueMailConstraintValidator implements ConstraintValidator<ValidateMail, Object> {
 
     @Autowired
     private UserService userService;
@@ -34,23 +34,35 @@ public class UniqueMailConstraintValidator implements ConstraintValidator<Valida
     }
 
     @Override
-    public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(Object user, ConstraintValidatorContext constraintValidatorContext) {
 
-        User user = null;
+        String email = "";
+        Boolean isNew = null;
+        User userExist = null;
+        if (user instanceof UserTo ){
+            UserTo   created = (UserTo) user;
+             email = created.getEmail();
+             isNew = created.isNew();
+        }
+        if (user instanceof User ){
+            User   created = (User) user;
+            email = created.getEmail();
+            isNew = created.isNew();
+        }
 
         try {
-            user = userService.getByEmail(email);
+            userExist = userService.getByEmail(email);
 
         }catch (Exception e){
 
         }
-        if (user != null) {
+        if (userExist != null) {
 
-            if (user.getEmail().equals(email) ){
+            if (userExist.getEmail().equals(email) && isNew ){
                 String message = resourceBundle.getMessage("error.user.emailDouble",null, Locale.getDefault());
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext.buildConstraintViolationWithTemplate(message)
-                       // .addPropertyNode("email")
+                        .addPropertyNode("email")
                         .addConstraintViolation();
                     return false;
             }

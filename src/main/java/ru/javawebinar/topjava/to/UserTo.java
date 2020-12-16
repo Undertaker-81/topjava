@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-
+@ValidateMail
 public class UserTo extends BaseTo implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,7 @@ public class UserTo extends BaseTo implements Serializable {
     @Email
     @NotBlank
     @Size(max = 100)
-    @ValidateMail
+
     private String email;
 
     @NotBlank
