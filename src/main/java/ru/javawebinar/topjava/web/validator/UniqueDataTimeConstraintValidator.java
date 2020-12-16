@@ -12,6 +12,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 /**
@@ -31,13 +32,14 @@ public class UniqueDataTimeConstraintValidator implements ConstraintValidator<Va
     }
 
     public boolean isValid(Meal meal, ConstraintValidatorContext context) {
-        String message = resourceBundle.getMessage("error.meal.data",null,null);
+
         List<LocalDateTime> mealsDateTime = mealService.getAll(SecurityUtil.authUserId())
                                                                         .stream()
                                                                         .map(Meal::getDateTime)
                                                                         .collect(Collectors.toList());
 
-        if (mealsDateTime.contains(meal.getDateTime())){
+        if (mealsDateTime.contains(meal.getDateTime()) && meal.isNew()){
+            String message = resourceBundle.getMessage("error.meal.data",null, Locale.getDefault());
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(message)
                                 .addPropertyNode("dateTime")

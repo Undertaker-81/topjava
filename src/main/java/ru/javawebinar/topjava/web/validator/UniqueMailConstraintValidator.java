@@ -13,6 +13,7 @@ import ru.javawebinar.topjava.web.validator.ValidateMail;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.util.Locale;
 import java.util.PropertyResourceBundle;
 
 /**
@@ -34,7 +35,7 @@ public class UniqueMailConstraintValidator implements ConstraintValidator<Valida
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext constraintValidatorContext) {
-        String message = resourceBundle.getMessage("error.user.emailDouble",null,null);
+
         User user = null;
 
         try {
@@ -44,7 +45,9 @@ public class UniqueMailConstraintValidator implements ConstraintValidator<Valida
 
         }
         if (user != null) {
+
             if (user.getEmail().equals(email) ){
+                String message = resourceBundle.getMessage("error.user.emailDouble",null, Locale.getDefault());
                 constraintValidatorContext.disableDefaultConstraintViolation();
                 constraintValidatorContext.buildConstraintViolationWithTemplate(message)
                        // .addPropertyNode("email")
