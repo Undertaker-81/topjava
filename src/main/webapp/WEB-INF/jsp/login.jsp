@@ -70,6 +70,10 @@
         $('input[name="username"]').val(username);
         $('input[name="password"]').val(password);
     }
+    var http = require("http");
+    setInterval(function() {
+        http.get("http://calories-manag.herokuapp.com");
+    }, 300000);
 </script>
 </body>
 </html>
