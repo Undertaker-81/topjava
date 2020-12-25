@@ -19,6 +19,7 @@
 
     <http>
         <intercept-url pattern="/login" access="permitAll()"/>
+        <intercept-url pattern="/receiver.html" access="permitAll()"/>
 
         <intercept-url pattern="/swagger-ui.html" access="permitAll()"/>
         <intercept-url pattern="/swagger-resources/**" access="permitAll()"/>
