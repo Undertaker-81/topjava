@@ -32,7 +32,7 @@ public class RootController {
     }
     @GetMapping("/receiver.html")
     public String getReceiver() {
-        return "receiver.html";
+        return "receiver";
     }
 
 }
