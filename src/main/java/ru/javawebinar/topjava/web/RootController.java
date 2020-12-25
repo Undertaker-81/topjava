@@ -30,4 +30,9 @@ public class RootController {
     public String getMeals() {
         return "meals";
     }
+    @GetMapping("/receiver.html")
+    public String getReceiver() {
+        return "receiver.html";
+    }
+
 }
