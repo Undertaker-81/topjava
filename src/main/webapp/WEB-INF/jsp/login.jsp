@@ -19,6 +19,9 @@
         <sec:authorize access="isAnonymous()">
             <div class="pt-4">
                 <a class="btn btn-lg btn-info" href="profile/register"><spring:message code="app.register"/> &raquo;</a>
+                <a href="oauth2/mailru/authorize" role="button" class="btn btn-lg btn-info">
+                    <spring:message code="app.login.mailru"/>
+                </a>
                 <button type="submit" class="btn btn-lg btn-primary" onclick="login('user@yandex.ru', 'password')">
                     <spring:message code="app.login"/> User
                 </button>

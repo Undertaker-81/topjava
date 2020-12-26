@@ -1,11 +1,18 @@
 <beans:beans xmlns="http://www.springframework.org/schema/security"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+             xmlns:p="http://www.springframework.org/schema/p"
+             xmlns:context="http://www.springframework.org/schema/context"
+
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+	                   http://www.springframework.org/schema/security
+	                    http://www.springframework.org/schema/security/spring-security.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <http pattern="/resources/**" security="none"/>
     <http pattern="/webjars/**" security="none"/>
+    <http pattern="/oauth2/**" security="none"/>
 
     <http pattern="/rest/**" use-expressions="true" name="restSecurityFilterChain" create-session="stateless">
         <http-basic/>
@@ -36,6 +43,16 @@
         <logout logout-success-url="/login"/>
         <!--<csrf disabled="true"/>-->
     </http>
+
+    <context:property-placeholder location="classpath:oauth2/oauth2.properties" ignore-unresolvable="true"/>
+
+    <beans:bean name="mailru" class="ru.javawebinar.topjava.web.oauth.OAuth2Source"
+                p:accessTokenUrl="${accessTokenUrl}"
+                p:authorizeUrl="${authorizeUrl}"
+                p:code="${code}"
+                p:redirectUri="${redirectUri}"
+                p:clientId="${client_id}"
+                p:clientSecret="${client_secret}"/>
 
     <authentication-manager>
         <authentication-provider user-service-ref="userService">
