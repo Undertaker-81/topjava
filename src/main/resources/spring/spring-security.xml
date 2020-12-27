@@ -51,6 +51,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
                 p:authorizeUrl="${authorizeUrl}"
                 p:code="${code}"
                 p:redirectUri="${redirectUri}"
+                p:urlRestApiMailRu="${restapimailru}"
+                p:privateKey="${private_key}"
                 p:clientId="${client_id}"
                 p:clientSecret="${client_secret}"/>
 

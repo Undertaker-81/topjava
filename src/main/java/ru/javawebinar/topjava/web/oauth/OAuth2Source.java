@@ -8,9 +8,28 @@ public class OAuth2Source {
     private String authorizeUrl;
     private String accessTokenUrl;
     private String clientId;
+    private String privateKey;
     private String clientSecret;
     private String redirectUri;
     private String code;
+    private String UrlRestApiMailRu;
+
+
+    public String getPrivateKey() {
+        return privateKey;
+    }
+
+    public void setPrivateKey(String privateKey) {
+        this.privateKey = privateKey;
+    }
+
+    public String getUrlRestApiMailRu() {
+        return UrlRestApiMailRu;
+    }
+
+    public void setUrlRestApiMailRu(String urlRestApiMailRu) {
+        UrlRestApiMailRu = urlRestApiMailRu;
+    }
 
     public String getAuthorizeUrl() {
         return authorizeUrl;
