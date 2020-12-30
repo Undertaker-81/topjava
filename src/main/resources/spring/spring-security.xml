@@ -49,7 +49,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <beans:bean name="mailru" class="ru.javawebinar.topjava.web.oauth.OAuth2Source"
                 p:accessTokenUrl="${accessTokenUrl}"
                 p:authorizeUrl="${authorizeUrl}"
-                p:code="${code}"
+
                 p:redirectUri="${redirectUri}"
                 p:urlRestApiMailRu="${restapimailru}"
                 p:privateKey="${private_key}"

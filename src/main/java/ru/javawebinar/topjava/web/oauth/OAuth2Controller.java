@@ -19,6 +19,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.javawebinar.topjava.model.Role;
+import ru.javawebinar.topjava.model.User;
+import ru.javawebinar.topjava.service.UserService;
 import ru.javawebinar.topjava.to.MailRuTo;
 import ru.javawebinar.topjava.to.UserTo;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -41,7 +44,8 @@ import java.security.NoSuchAlgorithmException;
 public class OAuth2Controller {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    private String code;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private UserDetailsService service;
@@ -59,11 +63,22 @@ public class OAuth2Controller {
     }
 
     @RequestMapping("/callback")
-    public String authenticate(@RequestParam String code, RedirectAttributes attr, HttpServletRequest request) throws JsonProcessingException, NoSuchAlgorithmException {
+    public String authenticate(@RequestParam String code,  HttpServletRequest request) throws JsonProcessingException, NoSuchAlgorithmException {
 
         MailRuTo mailRuTo = getMailRuUser(getAccessToken(code)) ;
+        try {
+            return getAuthAndRedirect(mailRuTo.getEmail(), request);
 
-        return "meals";
+        } catch (UsernameNotFoundException e) {
+            String password = DatatypeConverter.printHexBinary(MessageDigest.getInstance("MD5").digest(mailRuTo.getEmail().getBytes(StandardCharsets.UTF_8)));
+            User user = new User(null, mailRuTo.getName(), mailRuTo.getEmail(), password, 2000, Role.USER);
+
+            userService.create(user);
+
+           return getAuthAndRedirect(mailRuTo.getEmail(), request);
+        }
+
+
     }
 
     private String getAccessToken(String code) throws JsonProcessingException {
@@ -90,12 +105,10 @@ public class OAuth2Controller {
     private MailRuTo getMailRuUser(String accessToken) throws NoSuchAlgorithmException, JsonProcessingException {
         //https://api.mail.ru/docs/guides/restapi/
         RestTemplate restTemplate = new RestTemplate();
-       // https://stackoverflow.com/questions/415953/how-can-i-generate-an-md5-hash
-
         String params =  "app_id=" + source.getClientId() + "method=users.getInfo"
                           + "secure=1"
                          + "session_key=" + accessToken + source.getClientSecret();
-
+        // https://stackoverflow.com/questions/415953/how-can-i-generate-an-md5-hash
         String hash = DatatypeConverter.printHexBinary(MessageDigest.getInstance("MD5").digest(params.getBytes(StandardCharsets.UTF_8)));
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(source.getUrlRestApiMailRu())
                 .queryParam("method", "users.getInfo")
@@ -110,7 +123,7 @@ public class OAuth2Controller {
         JsonNode root = objectMapper.readTree(jsonString);
 
         String login = root.findValue("nick").asText();
-        String name = root.findValue("first_name").asText();
+        String name = root.findValue("first_name").asText() + " " + root.findValue("last_name").asText();
         if (name.equals("null")) {
             name = login;
         }
@@ -119,6 +132,17 @@ public class OAuth2Controller {
             throw new NotFoundException("No email found in Mail.ru account");
         }
         return new MailRuTo(login, name, email);
+    }
+    public String getAuthAndRedirect(String mail, HttpServletRequest request) throws UsernameNotFoundException {
+        UserDetails userDetails = service.loadUserByUsername(mail);
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(
+                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities())
+        );
+        // Create a new session and add the security context.
+        HttpSession session = request.getSession(true);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+        return "redirect:/meals";
     }
 
 }

@@ -11,7 +11,7 @@ public class OAuth2Source {
     private String privateKey;
     private String clientSecret;
     private String redirectUri;
-    private String code;
+
     private String UrlRestApiMailRu;
 
 
@@ -71,11 +71,5 @@ public class OAuth2Source {
         this.redirectUri = redirectUri;
     }
 
-    public String getCode() {
-        return code;
-    }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
 }

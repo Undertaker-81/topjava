@@ -19,16 +19,20 @@
         <sec:authorize access="isAnonymous()">
             <div class="pt-4">
                 <a class="btn btn-lg btn-info" href="profile/register"><spring:message code="app.register"/> &raquo;</a>
-                <a href="oauth2/mailru/authorize" role="button" class="btn btn-lg btn-info">
-                    <spring:message code="app.login.mailru"/>
-                </a>
+
                 <button type="submit" class="btn btn-lg btn-primary" onclick="login('user@yandex.ru', 'password')">
                     <spring:message code="app.login"/> User
                 </button>
                 <button type="submit" class="btn btn-lg btn-primary" onclick="login('admin@gmail.com', 'admin')">
                     <spring:message code="app.login"/> Admin
                 </button>
+
+                    <a class="btn btn-lg btn-info" href="/topjava/oauth2/mailru/authorize"><spring:message code="app.login.mailru"/><img src="resources/images/iconfinder_mailru_32.png"></a>
+
+           <!--         <a href="/topjava/oauth2/mailru/authorize"  class=""> <spring:message code="app.login.mailru"/><img src="resources/images/iconfinder_mailru_32.png"></a> -->
+
             </div>
+
         </sec:authorize>
         <div class="lead py-4"><spring:message code="app.stackTitle"/> <br>
             <a href="http://projects.spring.io/spring-security/">Spring Security</a>,
