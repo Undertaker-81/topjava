@@ -27,7 +27,7 @@
                     <spring:message code="app.login"/> Admin
                 </button>
 
-                    <a class="btn btn-lg btn-info" href="/topjava/oauth2/mailru/authorize"><spring:message code="app.login.mailru"/><img src="resources/images/iconfinder_mailru_32.png"></a>
+                    <a class="btn btn-link pull-right" href="/topjava/oauth2/mailru/authorize"><spring:message code="app.login.mailru"/> <img src="resources/images/iconfinder_mailru_32.png"></a>
 
            <!--         <a href="/topjava/oauth2/mailru/authorize"  class=""> <spring:message code="app.login.mailru"/><img src="resources/images/iconfinder_mailru_32.png"></a> -->
 
@@ -55,7 +55,8 @@
             <a href="http://hamcrest.org/JavaHamcrest/">Hamcrest</a>,
             <a href="http://jquery.com/">jQuery</a>,
             <a href="http://ned.im/noty/">jQuery notification</a>,
-            <a href="http://getbootstrap.com/">Bootstrap</a>.
+            <a href="http://getbootstrap.com/">Bootstrap</a>,
+            <a href="https://oauth.net/2/">OAuth 2.0</a>.
         </div>
     </div>
 </div>
