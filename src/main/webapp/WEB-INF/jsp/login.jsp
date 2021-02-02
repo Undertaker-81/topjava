@@ -27,7 +27,7 @@
                     <spring:message code="app.login"/> Admin
                 </button>
 
-                    <a class="btn btn-link pull-right" href="/topjava/oauth2/mailru/authorize"><spring:message code="app.login.mailru"/> <img src="resources/images/iconfinder_mailru_32.png"></a>
+                    <a class="btn btn-link pull-right" href="/oauth2/mailru/authorize"><spring:message code="app.login.mailru"/> <img src="resources/images/iconfinder_mailru_32.png"></a>
 
            <!--         <a href="/topjava/oauth2/mailru/authorize"  class=""> <spring:message code="app.login.mailru"/><img src="resources/images/iconfinder_mailru_32.png"></a> -->
 
