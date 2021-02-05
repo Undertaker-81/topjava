@@ -1,0 +1,3 @@
+id,name,email,password,registered,enabled,calories_per_day
+100000,User,user@yandex.ru,{noop}password,2020-12-30 22:04:13.468855,t,2005
+100001,Admin,admin@gmail.com,{noop}admin,2020-12-30 22:04:13.468855,t,1900
