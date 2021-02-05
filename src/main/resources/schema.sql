@@ -1,6 +1,6 @@
 
 CREATE TABLE USERS (
-                       id               INT  NOT NULL ,
+                       id               INT  auto_increment ,
                        name             VARCHAR(255)            NOT NULL,
                        email            VARCHAR(255)            NOT NULL,
                        password         VARCHAR(255)            NOT NULL,
@@ -13,14 +13,14 @@ CREATE UNIQUE INDEX users_unique_email_idx
     ON USERS (email);
 
 CREATE TABLE MEALS (
-                       id            INT  NOT NULL ,
+                       id            INT  auto_increment ,
                        user_id     INT   NOT NULL,
                        date_time   TIMESTAMP NOT NULL,
                        description VARCHAR(255)NOT NULL,
                        calories    INT       NOT NULL
 ) AS SELECT * FROM CSVREAD('c:/project/topjava21_boot/meals.csv');
 CREATE TABLE USER_ROLES (
-                            user_id   INT   NOT NULL ,
+                            user_id   INT   auto_increment ,
                             role    VARCHAR
 ) AS SELECT * FROM CSVREAD('c:/project/topjava21_boot/role.csv');
 
